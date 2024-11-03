@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Report</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-image: url('{{ url_for('static', filename='img/slider3.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Report</h1>
+        {% if patient %}
+            <p><strong>ID:</strong> {{ patient.id }}</p>
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Date of Birth:</strong> {{ patient.dob }}</p>
+            <p><strong>Age:</strong> {{ patient.age }}</p>
+            <p><strong>Email:</strong> {{ patient.email }}</p>
+            <p><strong>Phone:</strong> {{ patient.phone }}</p>
+            <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+        {% else %}
+            <p>Patient not found.</p>
+        {% endif %}
+        <a class="download-button">Download Report</a>
+        <p></p>
+        <a href="{{ url_for('patients') }}">Back to All Patients</a>
+    </div>
+</body>
+</html>

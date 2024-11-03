@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #092649;
+            color: white;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .sidebar ul li {
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: block;
+            padding: 10px 20px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #3c6382;
+            border-radius: 8px;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #3090cf;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Sections Styling */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #57a9c2;
+        }
+
+        .search-container {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-container input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #60a3bc;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .add-button {
+            background-color: #4b7bec;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-button:hover {
+            background-color: #3867d6;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Reception Portal</h2>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Appointments</a></li>
+            <li><a href="#">Manage Patients</a></li>
+            <li><a href="#">Medical Staff</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Welcome, Receptionist</h1>
+        </header>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Today's Appointments</h3>
+                <p>12</p>
+            </div>
+            <div class="card">
+                <h3>Checked-in Patients</h3>
+                <p>8</p>
+            </div>
+            <div class="card">
+                <h3>Pending Appointments</h3>
+                <p>4</p>
+            </div>
+        </div>
+
+        <!-- Manage Patients Section -->
+        <div class="section">
+            <h2>Manage Patients</h2>
+            <button class="add-button">Add New Patient</button>
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="patientSearchInput"
+                    placeholder="Search patient by name..."
+                    onkeyup="searchPatient()"
+                />
+            </div>
+            <table id="patientTable">
+                <tr>
+                    <th>Patient</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>+123 456 789</td>
+                    <td>Checked-in</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>+987 654 321</td>
+                    <td>Pending</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Manage Medical Staff Section -->
+        <div class="section">
+            <h2>Manage Medical Staff</h2>
+            <button class="add-button">Add New Staff</button>
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="staffSearchInput"
+                    placeholder="Search staff by name..."
+                    onkeyup="searchStaff()"
+                />
+            </div>
+            <table id="staffTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Contact</th>
+                </tr>
+                <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>Cardiologist</td>
+                    <td>+111 222 333</td>
+                </tr>
+                <tr>
+                    <td>Nurse Emma White</td>
+                    <td>Head Nurse</td>
+                    <td>+444 555 666</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function searchPatient() {
+            const input = document.getElementById("patientSearchInput").value.toLowerCase();
+            filterTable("patientTable", input);
+        }
+
+        function searchStaff() {
+            const input = document.getElementById("staffSearchInput").value.toLowerCase();
+            filterTable("staffTable", input);
+        }
+
+        function filterTable(tableId, input) {
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                const name = cells[0]?.innerText.toLowerCase();
+
+                rows[i].style.display = name && name.includes(input) ? "" : "none";
+            }
+        }
+    </script>
+</body>
+</html>

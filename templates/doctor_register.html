@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .hero-section {
+            height: 300px;
+            background: url('https://via.placeholder.com') no-repeat center center/cover; /* Replace with actual background image */
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text contrast */
+        }
+
+        .hero-content {
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-section h1, .hero-section p {
+            z-index: 1;
+            color: #fff; /* Ensuring text is visible over the background */
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+
+        .registration-form {
+            margin-top: -100px;
+        }
+
+        .emergency-contact {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Area -->
+    {% include 'header.html' %}
+    <!-- End Header Area -->
+
+    <div class="hero-section d-flex align-items-center text-white">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="display-4 fw-bold">CARING FOR LIFE</h1>
+            <p class="lead">Leading the Way in Medical Excellence</p>
+        </div>
+    </div>
+
+    <div class="container registration-form">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Doctor Registration</h2>
+                        <form id="doctorRegistrationForm" action="/doctor_register" method="POST">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dob" class="form-label">Date of Birth:</label>
+                                    <input type="date" class="form-control" id="dob" name="dob" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="number" class="form-control" id="age" name="age" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="specialization" class="form-label">Specialization</label>
+                                    <select class="form-select" id="specialization" name="specialization" required>
+                                        <option value="">Select Specialization</option>
+                                        <option value="cardiology">Cardiology</option>
+                                        <option value="neurology">Neurology</option>
+                                        <option value="pediatrics">Pediatrics</option>
+                                        <option value="oncology">Oncology</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="license" class="form-label">License Number</label>
+                                    <input type="text" class="form-control" id="license" name="license" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="experience" class="form-label">Years of Experience</label>
+                                    <input type="number" class="form-control" id="experience" name="experience" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Additional Information</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script>
+        document.getElementById('doctorRegistrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Show SweetAlert confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to register this doctor?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, register it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Create a FormData object to handle form data
+                    const formData = new FormData(this);
+    
+                    // Send the form data using fetch API
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message
+                            Swal.fire(
+                                'Registered!',
+                                'The doctor has been registered successfully.',
+                                'success'
+                            );
+                            // Optionally redirect or clear the form
+                            // window.location.href = '/some-other-page'; // Redirect example
+                            // this.reset(); // Clear the form
+                        } else {
+                            // Show error message
+                            Swal.fire(
+                                'Error!',
+                                data.message || 'There was an error during registration.',
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network errors
+                        Swal.fire(
+                            'Error!',
+                            'Network error. Please try again later.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
